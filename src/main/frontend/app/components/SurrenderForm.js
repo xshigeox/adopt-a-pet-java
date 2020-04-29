@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom"
 import _ from "lodash"
 import ErrorList from "./ErrorList"
 
-const SurrenderForm = props => {
+const SurrenderForm = (props) => {
   const defaultFormValues = {
     name: "",
     phoneNumber: "",
@@ -12,7 +12,7 @@ const SurrenderForm = props => {
     petAge: "",
     petType: "",
     petImageUrl: "",
-    vaccinationStatus: ""
+    vaccinationStatus: "",
   }
 
   const [newSurrender, setNewSurrender] = useState(defaultFormValues)
@@ -28,14 +28,14 @@ const SurrenderForm = props => {
       "email",
       "petName",
       "petType",
-      "petImageUrl"
+      "petImageUrl",
     ]
 
-    requiredFields.forEach(field => {
+    requiredFields.forEach((field) => {
       if (newSurrender[field].trim() === "") {
         submitErrors = {
           ...submitErrors,
-          [field]: "is blank"
+          [field]: "is blank",
         }
       }
     })
@@ -44,22 +44,22 @@ const SurrenderForm = props => {
     return _.isEmpty(submitErrors)
   }
 
-  const handleInputChange = event => {
+  const handleInputChange = (event) => {
     setNewSurrender({
       ...newSurrender,
-      [event.currentTarget.id]: event.currentTarget.value
+      [event.currentTarget.id]: event.currentTarget.value,
     })
   }
 
-  const addNewPet = event => {
+  const addNewPet = (event) => {
     event.preventDefault()
     if (isValidForSubmission()) {
       fetch("/api/v1/newPet", {
         method: "POST",
         body: JSON.stringify(newSurrender),
-        headers: { "Content-Type": "application/json" }
+        headers: { "Content-Type": "application/json" },
       })
-        .then(response => {
+        .then((response) => {
           if (response.ok) {
             setSubmitted(true)
           } else {
@@ -68,18 +68,19 @@ const SurrenderForm = props => {
             throw error
           }
         })
-        .catch(error => console.error(`Error in fetch: ${error.message}`))
+        .catch((error) => console.error(`Error in fetch: ${error.message}`))
     }
   }
 
   const vaccinationStatusList = ["Yes", "No"]
-  const vaccinationStatus = [""].concat(vaccinationStatusList).map(status => {
+  const vaccinationStatus = [""].concat(vaccinationStatusList).map((status) => {
     return (
       <option key={status} value={status}>
         {status}
       </option>
     )
   })
+
   const petTypeList = ["Guinea Pig", "Reptile"]
   const petType = [""].concat(petTypeList).map((type, index) => {
     return (
@@ -153,7 +154,7 @@ const SurrenderForm = props => {
             onChange={handleInputChange}
           />
         </div>
-
+        {/* 
         <div>
           <label htmlFor="petType">Pet Type:</label>
           <select
@@ -162,6 +163,16 @@ const SurrenderForm = props => {
             value={newSurrender.petType}
           >
             {petType}
+          </select>
+        </div> */}
+
+        <div>
+          <label htmlFor="petType">Pet Type:</label>
+          <select id="petType" onChange={handleInputChange} value="1">
+            Reptile
+          </select>
+          <select id="petType" onChange={handleInputChange} value="2">
+            Guinea Pig
           </select>
         </div>
 

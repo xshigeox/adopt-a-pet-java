@@ -1,8 +1,10 @@
 package com.launchacademy.javaspringandreact.controllers.api.v1;
 
 import com.launchacademy.javaspringandreact.models.Pet;
+import com.launchacademy.javaspringandreact.models.PetSurrenderApplication;
 import com.launchacademy.javaspringandreact.models.PetType;
 import com.launchacademy.javaspringandreact.repositories.PetRepository;
+import com.launchacademy.javaspringandreact.repositories.PetSurrenderApplicationRepository;
 import com.launchacademy.javaspringandreact.repositories.PetTypeRepository;
 import java.util.List;
 import lombok.NoArgsConstructor;
@@ -10,10 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -21,13 +27,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1")
-public class PetTypeApiController {
+public class PetApiController {
 
   @Autowired
   private PetTypeRepository petTypeRepo;
 
   @Autowired
   private PetRepository petRepo;
+
+  @Autowired
+  private PetSurrenderApplicationRepository petSurrenderRepo;
 
   @NoArgsConstructor
   private class PetTypeNotFoundException extends RuntimeException {
@@ -45,17 +54,17 @@ public class PetTypeApiController {
     }
   }
 
-  private class InvalidAdoptionApplicationException extends RuntimeException {
+  private class InvalidPetSurrenderApplicationException extends RuntimeException {
 
   }
 
   @ControllerAdvice
-  private class InvalidAdoptionApplicationAdvice {
+  private class InvalidPetSurrenderApplicationAdvice {
 
     @ResponseBody
-    @ExceptionHandler(InvalidAdoptionApplicationException.class)
+    @ExceptionHandler(InvalidPetSurrenderApplicationException.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    String invalidContractor(InvalidAdoptionApplicationException ic) {
+    String invalidContractor(InvalidPetSurrenderApplicationException ic) {
       return "";
     }
   }
@@ -87,5 +96,16 @@ public class PetTypeApiController {
       }
     }
     return foundPet;
+  }
+
+  @PostMapping("/newPet")
+  public PetSurrenderApplication create(
+      @RequestBody @ModelAttribute PetSurrenderApplication petSurrenderApplication,
+      BindingResult bindingResult) {
+    if (bindingResult.hasErrors()) {
+      throw new InvalidPetSurrenderApplicationException();
+    } else {
+      return petSurrenderRepo.save(petSurrenderApplication);
+    }
   }
 }
