@@ -7,6 +7,7 @@ import com.launchacademy.javaspringandreact.repositories.PetRepository;
 import com.launchacademy.javaspringandreact.repositories.PetSurrenderApplicationRepository;
 import com.launchacademy.javaspringandreact.repositories.PetTypeRepository;
 import java.util.List;
+import javax.validation.Valid;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,7 +17,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -98,4 +98,15 @@ public class PetApiController {
     return foundPet;
   }
 
+  @PostMapping("/newPet")
+  public PetSurrenderApplication create(
+      @RequestBody @Valid PetSurrenderApplication petSurrenderApplication,
+      BindingResult bindingResult) {
+
+    if (bindingResult.hasErrors()) {
+      throw new InvalidPetSurrenderApplicationException();
+    } else {
+      return petSurrenderRepo.save(petSurrenderApplication);
+    }
+  }
 }
