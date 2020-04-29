@@ -98,14 +98,4 @@ public class PetApiController {
     return foundPet;
   }
 
-  @PostMapping("/newPet")
-  public PetSurrenderApplication create(
-      @RequestBody @ModelAttribute PetSurrenderApplication petSurrenderApplication,
-      BindingResult bindingResult) {
-    if (bindingResult.hasErrors()) {
-      throw new InvalidPetSurrenderApplicationException();
-    } else {
-      return petSurrenderRepo.save(petSurrenderApplication);
-    }
-  }
 }
