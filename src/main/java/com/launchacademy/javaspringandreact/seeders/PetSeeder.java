@@ -4,12 +4,13 @@ import com.launchacademy.javaspringandreact.models.Pet;
 import com.launchacademy.javaspringandreact.models.PetType;
 import com.launchacademy.javaspringandreact.repositories.PetRepository;
 import com.launchacademy.javaspringandreact.repositories.PetTypeRepository;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PetSeeder implements CommandLineRunner {
+public class PetSeeder {
 
   @Autowired
   private PetRepository petRepo;
@@ -17,8 +18,8 @@ public class PetSeeder implements CommandLineRunner {
   @Autowired
   private PetTypeRepository petTypeRepo;
 
-  @Override
-  public void run(String... args) throws Exception {
+  public void seed() {
+    List<Pet> petList = new ArrayList<>();
     PetType typeReptile = petTypeRepo.findByType("Reptile");
     PetType typeGuineaPig = petTypeRepo.findByType("Guinea Pig");
 
@@ -26,13 +27,14 @@ public class PetSeeder implements CommandLineRunner {
 
       Pet reptile = new Pet();
       reptile.setName("Artemis");
-      reptile.setImgUrl("https://lafeber.com/vet/wp-content/uploads/Veiled-chameleon-by-Mrs-Logic-cropped-square.jpg");
+      reptile.setImgUrl(
+          "https://lafeber.com/vet/wp-content/uploads/Veiled-chameleon-by-Mrs-Logic-cropped-square.jpg");
       reptile.setAge(5);
       reptile.setVaccinationStatus(false);
       reptile.setAdoptionStory("Is a chameleon that gets excited at the sight of lettuce.");
       reptile.setAdoptionStatus("Pending");
       reptile.setPetType(typeReptile);
-      petRepo.save(reptile);
+      petList.add(reptile);
 
       Pet reptile1 = new Pet();
       reptile1.setName("Sticky");
@@ -42,7 +44,7 @@ public class PetSeeder implements CommandLineRunner {
       reptile1.setAdoptionStory("This guy loves crickets");
       reptile1.setAdoptionStatus("Pending");
       reptile1.setPetType(typeReptile);
-      petRepo.save(reptile1);
+      petList.add(reptile1);
 
       Pet reptile2 = new Pet();
       reptile2.setName("Dino");
@@ -53,27 +55,29 @@ public class PetSeeder implements CommandLineRunner {
       reptile2.setAdoptionStory("Great lizard just looking to play.");
       reptile2.setAdoptionStatus("Pending");
       reptile2.setPetType(typeReptile);
-      petRepo.save(reptile2);
+      petList.add(reptile2);
 
       Pet guineaPig = new Pet();
       guineaPig.setName("Helena");
-      guineaPig.setImgUrl("https://www.reptilecentre.com/images/wmfixed/Reptile/frozen-guinea-pig-v1-495-495.jpg?v=2");
+      guineaPig.setImgUrl(
+          "https://www.reptilecentre.com/images/wmfixed/Reptile/frozen-guinea-pig-v1-495-495.jpg?v=2");
       guineaPig.setAge(3);
       guineaPig.setVaccinationStatus(true);
       guineaPig.setAdoptionStory("A sweet guinea pig that loves belly rubs.");
       guineaPig.setAdoptionStatus("Pending");
       guineaPig.setPetType(typeGuineaPig);
-      petRepo.save(guineaPig);
+      petList.add(guineaPig);
 
       Pet guineaPig1 = new Pet();
       guineaPig1.setName("Pancake");
-      guineaPig1.setImgUrl("https://i.pinimg.com/originals/f8/bc/80/f8bc8082646c8bc7e7a87b9d6b02543f.jpg");
+      guineaPig1.setImgUrl(
+          "https://i.pinimg.com/originals/f8/bc/80/f8bc8082646c8bc7e7a87b9d6b02543f.jpg");
       guineaPig1.setAge(4);
       guineaPig1.setVaccinationStatus(true);
       guineaPig1.setAdoptionStory("This guy loves to lounge around");
       guineaPig1.setAdoptionStatus("Pending");
       guineaPig1.setPetType(typeGuineaPig);
-      petRepo.save(guineaPig1);
+      petList.add(guineaPig1);
 
       Pet guineaPig2 = new Pet();
       guineaPig2.setName("Rocky");
@@ -83,7 +87,11 @@ public class PetSeeder implements CommandLineRunner {
       guineaPig2.setAdoptionStory("An ornery guinea pig that hates belly rubs.");
       guineaPig2.setAdoptionStatus("Pending");
       guineaPig2.setPetType(typeGuineaPig);
-      petRepo.save(guineaPig2);
+      petList.add(guineaPig2);
+
+      for (Pet pet : petList) {
+        petRepo.save(pet);
+      }
     }
   }
 }
