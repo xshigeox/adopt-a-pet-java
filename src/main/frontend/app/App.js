@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Link, Route } from "react-router-dom"
 import TypeOfPetsContainer from "./components/TypeOfPetsContainer"
 import PetListContainer from "./components/PetListContainer"
 import PetShowContainer from "./components/PetShowContainer"
+import SurrenderForm from "./components/SurrenderForm"
 
 const App = (props) => {
   return (
@@ -50,8 +51,8 @@ const App = (props) => {
           <Route exact path="/pets/reptiles" key={"lz"}>
             <PetListContainer petType={"Reptile"} petTypeName={"Reptiles"} />
           </Route>
-          {/* <Route exact path="/adoptions/new" component={SurrenderForm} />
-          <Route exact path="/login" component={LoginPage} /> */}
+          <Route exact path="/adoptions/new" component={SurrenderForm} />
+          {/* <Route exact path="/login" component={LoginPage} /> */}
           <Route exact path="/:petType/:id" component={PetShowContainer} />
         </Switch>
       </div>
