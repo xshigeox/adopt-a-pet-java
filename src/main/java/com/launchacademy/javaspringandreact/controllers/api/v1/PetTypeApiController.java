@@ -45,20 +45,20 @@ public class PetTypeApiController {
     }
   }
 
-  private class InvalidContractorException extends RuntimeException {
+  private class InvalidAdoptionApplicationException extends RuntimeException {
 
   }
 
-//  @ControllerAdvice
-//  private class InvalidContractorAdvice {
-//
-//    @ResponseBody
-//    @ExceptionHandler(InvalidContractorException.class)
-//    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-//    String invalidContractor(InvalidContractorException ic) {
-//      return "";
-//    }
-//  }
+  @ControllerAdvice
+  private class InvalidAdoptionApplicationAdvice {
+
+    @ResponseBody
+    @ExceptionHandler(InvalidAdoptionApplicationException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    String invalidContractor(InvalidAdoptionApplicationException ic) {
+      return "";
+    }
+  }
 
   @GetMapping("/pets")
   public List getList() {

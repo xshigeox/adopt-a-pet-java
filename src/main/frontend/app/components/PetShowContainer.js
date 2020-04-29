@@ -23,7 +23,6 @@ const ShowPage = (props) => {
       })
   }, {})
 
-  console.log(pet)
   return <PetInfo key={petId} pet={pet} />
 }
 

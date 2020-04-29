@@ -8,7 +8,6 @@ const PetListContainer = (props) => {
     fetch(`/api/v1/${props.petType}`)
       .then((response) => {
         if (response.ok) {
-          console.log(response)
           return response
         } else {
           let errorMessage = `${response.status} (${response.statusText})`

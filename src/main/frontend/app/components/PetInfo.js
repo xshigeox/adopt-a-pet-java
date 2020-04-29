@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-// import AdoptMeForm from "./AdoptMeForm"
+import AdoptMeForm from "./AdoptMeForm"
 
 const PetInfo = (props) => {
   const [formReveal, setFormReveal] = useState(false)
@@ -59,11 +59,13 @@ const PetInfo = (props) => {
             </button>
           </div>
         </div>
-        <div>{/* <AdoptMeForm formReveal={formReveal} id={id} /> */}</div>
+        <div>
+          <AdoptMeForm formReveal={formReveal} id={id} />
+        </div>
       </div>
     )
   } else {
-    return ""
+    return "Pet Not Found"
   }
 }
 
