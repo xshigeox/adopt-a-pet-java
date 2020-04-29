@@ -45,17 +45,17 @@ public class PetTypeApiController {
     }
   }
 
-  private class InvalidContractorException extends RuntimeException {
+  private class InvalidAdoptionApplicationException extends RuntimeException {
 
   }
 
   @ControllerAdvice
-  private class InvalidContractorAdvice {
+  private class InvalidAdoptionApplicationAdvice {
 
     @ResponseBody
-    @ExceptionHandler(InvalidContractorException.class)
+    @ExceptionHandler(InvalidAdoptionApplicationException.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    String invalidContractor(InvalidContractorException ic) {
+    String invalidContractor(InvalidAdoptionApplicationException ic) {
       return "";
     }
   }
