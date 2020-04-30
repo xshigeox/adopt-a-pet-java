@@ -26,7 +26,7 @@ const PetInfo = (props) => {
     setFormReveal(true)
   }
 
-  if (props.pet.name) {
+  if (props.found) {
     return (
       <div>
         <div className="portfolio-resume-scrolling-container row">
@@ -65,7 +65,7 @@ const PetInfo = (props) => {
       </div>
     )
   } else {
-    return ""
+    return "404: Pet Not Found"
   }
 }
 
