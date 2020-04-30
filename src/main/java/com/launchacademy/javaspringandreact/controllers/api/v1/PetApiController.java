@@ -105,7 +105,7 @@ public class PetApiController {
     return petRepo.findAllByPetType(type);
   }
 
-  @GetMapping("/{petType}/{id}")
+  @GetMapping("/pets/{petType}/{id}")
   public Pet getOnePet(@PathVariable String petType, @PathVariable Integer id) {
     PetType type = petTypeRepo.findByType(StringUtils.capitalize(petType));
     List<Pet> petsList = petRepo.findAllByPetType(type);

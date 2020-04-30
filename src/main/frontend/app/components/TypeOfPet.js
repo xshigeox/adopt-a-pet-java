@@ -9,7 +9,7 @@ const TypeOfPet = (props) => {
     <div className="featured-image-block medium-6 column">
       <Link to={path}>
         <img className="resizing-img" src="img" alt={type} />
-        <p className="text-center featured-image-block-title">{type}</p>
+        <p className="text-center featured-image-block-title">{type}s</p>
       </Link>
       <p>{description}</p>
     </div>

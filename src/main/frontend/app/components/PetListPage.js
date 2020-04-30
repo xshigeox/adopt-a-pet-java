@@ -8,12 +8,12 @@ const ListPage = (props) => {
     <div className="row add-pets-section">
       <div className="small-12 medium-6 columns about-pets">
         <div className="about-pets-avatar">
-          <Link to={`/${props.petType}/${id}`}>
+          <Link to={`/pets/${props.petType}/${id}`}>
             <img className="avatar-image test" src={imgUrl} alt={name} />
           </Link>
         </div>
         <div className="about-pets-author">
-          <Link to={`/${props.petType}/${id}`}>
+          <Link to={`/pets/${props.petType}/${id}`}>
             <p className="author-name">{name}</p>
           </Link>
           <p className="author-location">Age: {age}</p>
@@ -25,7 +25,7 @@ const ListPage = (props) => {
       </div>
       <div className="small-12 medium-6 columns add-friend">
         <div className="add-friend-action">
-          <Link to={`/pets/${id}`}>
+          <Link to={`/pets/${props.petType}/${id}`}>
             <button className="button primary small">Adopt Me</button>
           </Link>
         </div>

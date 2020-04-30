@@ -53,7 +53,7 @@ const App = (props) => {
           </Route>
           <Route exact path="/adoptions/new" component={SurrenderForm} />
           {/* <Route exact path="/login" component={LoginPage} /> */}
-          <Route exact path="/:petType/:id" component={PetShowContainer} />
+          <Route exact path="/pets/:petType/:id" component={PetShowContainer} />
         </Switch>
       </div>
     </BrowserRouter>
