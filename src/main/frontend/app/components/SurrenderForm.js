@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from "react"
-import {Redirect} from "react-router-dom"
+import React, { useState, useEffect } from "react"
+import { Redirect } from "react-router-dom"
 import _ from "lodash"
 import ErrorList from "./ErrorList"
 
@@ -8,23 +8,23 @@ const SurrenderForm = (props) => {
 
   useEffect(() => {
     fetch("/api/v1/pets")
-    .then((response) => {
-      if (response.ok) {
-        return response
-      } else {
-        let errorMessage = `${response.status} (${response.statusText})`
-        throw new Error(errorMessage)
-      }
-    })
-    .then((result) => {
-      return result.json()
-    })
-    .then((json) => {
-      setFoundPetTypes(json)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
+      .then((response) => {
+        if (response.ok) {
+          return response
+        } else {
+          let errorMessage = `${response.status} (${response.statusText})`
+          throw new Error(errorMessage)
+        }
+      })
+      .then((result) => {
+        return result.json()
+      })
+      .then((json) => {
+        setFoundPetTypes(json)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }, [])
 
   const defaultFormValues = {
@@ -34,7 +34,7 @@ const SurrenderForm = (props) => {
     petName: "",
     petAge: "",
     petType: "",
-    petImageUrl: "",
+    petImgUrl: "",
     vaccinationStatus: "Pending",
   }
 
@@ -51,7 +51,7 @@ const SurrenderForm = (props) => {
       "email",
       "petName",
       "petType",
-      "petImageUrl",
+      "petImgUrl",
     ]
 
     requiredFields.forEach((field) => {
@@ -94,7 +94,7 @@ const SurrenderForm = (props) => {
       petName: newSurrender.petName,
       petAge: newSurrender.petAge,
       petType: petType,
-      petImageUrl: newSurrender.petImageUrl,
+      petImgUrl: newSurrender.petImgUrl,
       vaccinationStatus: isVaccinated,
       applicationStatus: "Pending",
     }
@@ -103,148 +103,148 @@ const SurrenderForm = (props) => {
       fetch("/api/v1/newPet", {
         method: "POST",
         body: JSON.stringify(formPayLoad),
-        headers: {"Content-Type": "application/json"},
+        headers: { "Content-Type": "application/json" },
       })
-      .then((response) => {
-        if (response.ok) {
-          setSubmitted(true)
-        } else {
-          let errorMessage = `${response.status} (${response.statusText})`
-          throw new Error(errorMessage)
-        }
-      })
-      .catch((error) => console.error(`Error in fetch: ${error.message}`))
+        .then((response) => {
+          if (response.ok) {
+            setSubmitted(true)
+          } else {
+            let errorMessage = `${response.status} (${response.statusText})`
+            throw new Error(errorMessage)
+          }
+        })
+        .catch((error) => console.error(`Error in fetch: ${error.message}`))
     }
   }
 
   const petTypeList = foundPetTypes.map((petType) => {
     return (
-        <option key={petType.type} value={petType.id}>
-          {petType.type}
-        </option>
+      <option key={petType.type} value={petType.id}>
+        {_.startCase(petType.type)}
+      </option>
     )
   })
 
   if (submitted === false) {
     return (
-        <form
-            autoComplete="off"
-            id="surrenderForm"
-            className="callout form-format"
-            onSubmit={addNewPet}
-        >
-          <h1 className="header-title">Surrender a Pet</h1>
-          <ErrorList errors={errors}/>
-          <div>
-            <label htmlFor="name">Name:</label>
-            <input
-                type="text"
-                id="name"
-                name="name"
-                value={newSurrender.name}
-                onChange={handleInputChange}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="phoneNumber">Phone Number:</label>
-            <input
-                type="text"
-                id="phoneNumber"
-                name="phoneNumber"
-                value={newSurrender.phoneNumber}
-                onChange={handleInputChange}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="email">Email:</label>
-            <input
-                type="text"
-                id="email"
-                name="email"
-                value={newSurrender.email}
-                onChange={handleInputChange}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="petName">Pet Name:</label>
-            <input
-                type="text"
-                id="petName"
-                name="petName"
-                value={newSurrender.petName}
-                onChange={handleInputChange}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="petAge">Pet Age:</label>
-            <input
-                type="text"
-                id="petAge"
-                name="petAge"
-                value={newSurrender.petAge}
-                onChange={handleInputChange}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="petType">Pet Type:</label>
-            <select
-                id="petType"
-                onChange={handleInputChange}
-                value={newSurrender.petType}
-            >
-              <option value=""/>
-              {petTypeList}
-            </select>
-          </div>
-
-          <div>
-            <label htmlFor="petImageUrl">Image URL:</label>
-            <input
-                type="text"
-                id="petImageUrl"
-                name="petImageUrl"
-                value={newSurrender.petImageUrl}
-                onChange={handleInputChange}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="vaccinationStatus">Vaccination Status:</label>
-            <select
-                id="vaccinationStatus"
-                onChange={handleInputChange}
-                value={newSurrender.vaccinationStatus}
-            >
-              <option value=""/>
-              <option value="true">Vaccinated</option>
-              <option value="false">Not Vaccinated</option>
-            </select>
-          </div>
-
+      <form
+        autoComplete="off"
+        id="surrenderForm"
+        className="callout form-format"
+        onSubmit={addNewPet}
+      >
+        <h1 className="header-title">Surrender a Pet</h1>
+        <ErrorList errors={errors} />
+        <div>
+          <label htmlFor="name">Name:</label>
           <input
-              type="hidden"
-              name="applicationStatus"
-              id="applicationStatus"
-              value="Pending"
+            type="text"
+            id="name"
+            name="name"
+            value={newSurrender.name}
+            onChange={handleInputChange}
           />
+        </div>
 
-          <input type="submit" className="button" value="submit"/>
-        </form>
+        <div>
+          <label htmlFor="phoneNumber">Phone Number:</label>
+          <input
+            type="text"
+            id="phoneNumber"
+            name="phoneNumber"
+            value={newSurrender.phoneNumber}
+            onChange={handleInputChange}
+          />
+        </div>
+
+        <div>
+          <label htmlFor="email">Email:</label>
+          <input
+            type="text"
+            id="email"
+            name="email"
+            value={newSurrender.email}
+            onChange={handleInputChange}
+          />
+        </div>
+
+        <div>
+          <label htmlFor="petName">Pet Name:</label>
+          <input
+            type="text"
+            id="petName"
+            name="petName"
+            value={newSurrender.petName}
+            onChange={handleInputChange}
+          />
+        </div>
+
+        <div>
+          <label htmlFor="petAge">Pet Age:</label>
+          <input
+            type="text"
+            id="petAge"
+            name="petAge"
+            value={newSurrender.petAge}
+            onChange={handleInputChange}
+          />
+        </div>
+
+        <div>
+          <label htmlFor="petType">Pet Type:</label>
+          <select
+            id="petType"
+            onChange={handleInputChange}
+            value={newSurrender.petType}
+          >
+            <option value="" />
+            {petTypeList}
+          </select>
+        </div>
+
+        <div>
+          <label htmlFor="petImgUrl">Image URL:</label>
+          <input
+            type="text"
+            id="petImgUrl"
+            name="petImgUrl"
+            value={newSurrender.petImgUrl}
+            onChange={handleInputChange}
+          />
+        </div>
+
+        <div>
+          <label htmlFor="vaccinationStatus">Vaccination Status:</label>
+          <select
+            id="vaccinationStatus"
+            onChange={handleInputChange}
+            value={newSurrender.vaccinationStatus}
+          >
+            <option value="" />
+            <option value="true">Vaccinated</option>
+            <option value="false">Not Vaccinated</option>
+          </select>
+        </div>
+
+        <input
+          type="hidden"
+          name="applicationStatus"
+          id="applicationStatus"
+          value="Pending"
+        />
+
+        <input type="submit" className="button" value="submit" />
+      </form>
     )
   } else {
     return (
-        <div>
-          <h3 id="surrender-review">Your application is pending review.</h3>
-          <div id="hidden">
-            {setTimeout(() => setToHome(true), 3000)}
-            {toHome ? <Redirect to="/pets"/> : null}
-          </div>
+      <div>
+        <h3 id="surrender-review">Your application is pending review.</h3>
+        <div id="hidden">
+          {setTimeout(() => setToHome(true), 3000)}
+          {toHome ? <Redirect to="/" /> : null}
         </div>
+      </div>
     )
   }
 }
