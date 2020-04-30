@@ -11,9 +11,15 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "adoption_applications")
+@Getter
+@Setter
+@NoArgsConstructor
 public class AdoptionApplication {
 
   @Id

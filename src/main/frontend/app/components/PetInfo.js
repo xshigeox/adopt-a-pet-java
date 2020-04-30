@@ -60,7 +60,7 @@ const PetInfo = (props) => {
           </div>
         </div>
         <div>
-          <AdoptMeForm formReveal={formReveal} id={id} />
+          <AdoptMeForm formReveal={formReveal} id={id} pet={props.pet} />
         </div>
       </div>
     )
