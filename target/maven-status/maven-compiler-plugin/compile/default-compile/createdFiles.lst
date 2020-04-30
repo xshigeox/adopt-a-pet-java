@@ -1,6 +1,9 @@
 com/launchacademy/javaspringandreact/controllers/api/v1/PetApiController$InvalidPetSurrenderApplicationException.class
 com/launchacademy/javaspringandreact/DemoApplication.class
+com/launchacademy/javaspringandreact/controllers/api/v1/PetApiController$InvalidAdoptionApplicationException.class
 com/launchacademy/javaspringandreact/controllers/api/v1/PetApiController.class
 com/launchacademy/javaspringandreact/controllers/api/v1/PetApiController$PetTypeNotFoundException.class
+com/launchacademy/javaspringandreact/seeders/MainSeeder.class
+com/launchacademy/javaspringandreact/controllers/api/v1/PetApiController$InvalidAdoptionApplicationAdvice.class
 com/launchacademy/javaspringandreact/controllers/api/v1/PetApiController$PetTypeNotFoundAdvice.class
 com/launchacademy/javaspringandreact/controllers/api/v1/PetApiController$InvalidPetSurrenderApplicationAdvice.class
