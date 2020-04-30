@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -55,6 +54,21 @@ public class PetApiController {
     @ExceptionHandler(PetTypeNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     String urlNotFoundHandler(PetTypeNotFoundException ex) {
+      return ex.getMessage();
+    }
+  }
+
+  @NoArgsConstructor
+  private class PetNotFoundException extends  RuntimeException {
+
+  }
+
+  @ControllerAdvice
+  private class PetNotFoundAdvice {
+    @ResponseBody
+    @ExceptionHandler(PetNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    String petNotFoundHandler(PetNotFoundException ex) {
       return ex.getMessage();
     }
   }
@@ -102,20 +116,14 @@ public class PetApiController {
   @GetMapping("/{petType}")
   public List getPetTypeList(@PathVariable String petType) {
     PetType type = petTypeRepo.findByType(petType);
+
     return petRepo.findAllByPetType(type);
   }
 
-  @GetMapping("/pets/{petType}/{id}")
+  @GetMapping("/{petType}/{id}")
   public Pet getOnePet(@PathVariable String petType, @PathVariable Integer id) {
     PetType type = petTypeRepo.findByType(petType);
-    List<Pet> petsList = petRepo.findAllByPetType(type);
-    Pet foundPet = new Pet();
-    for (Pet pet : petsList) {
-      if (pet.getId().equals(id)) {
-        foundPet = pet;
-      }
-    }
-    return foundPet;
+    return petRepo.findByIdAndPetType(id, type).orElseThrow(PetNotFoundException::new);
   }
 
   @PostMapping("/newPet")
