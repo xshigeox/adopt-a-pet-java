@@ -20,8 +20,8 @@ public class PetSeeder {
 
   public void seed() {
     List<Pet> petList = new ArrayList<>();
-    PetType typeReptile = petTypeRepo.findByType("Reptile");
-    PetType typeGuineaPig = petTypeRepo.findByType("Guinea Pig");
+    PetType typeReptile = petTypeRepo.findByType("reptile");
+    PetType typeGuineaPig = petTypeRepo.findByType("guineapig");
 
     if (petRepo.count() == 0) {
 

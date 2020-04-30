@@ -44,12 +44,12 @@ const App = (props) => {
           <Route exact path="/" component={TypeOfPetsContainer} />
           <Route exact path="/pets/guineapigs" key={"gp"}>
             <PetListContainer
-              petType={"Guinea Pig"}
+              petType={"guineapig"}
               petTypeName={"Guinea Pigs"}
             />
           </Route>
           <Route exact path="/pets/reptiles" key={"lz"}>
-            <PetListContainer petType={"Reptile"} petTypeName={"Reptiles"} />
+            <PetListContainer petType={"reptile"} petTypeName={"Reptiles"} />
           </Route>
           <Route exact path="/adoptions/new" component={SurrenderForm} />
           {/* <Route exact path="/login" component={LoginPage} /> */}

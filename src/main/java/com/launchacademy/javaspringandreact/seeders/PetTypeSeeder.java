@@ -18,12 +18,12 @@ public class PetTypeSeeder {
 
     if (petTypeRepo.count() == 0) {
       PetType petType = new PetType();
-      petType.setType("Reptile");
+      petType.setType("reptile");
       petType.setDescription("All things reptilian");
       petTypeList.add(petType);
 
       PetType petType1 = new PetType();
-      petType1.setType("Guinea Pig");
+      petType1.setType("guineapig");
       petType1.setDescription("Not quite pigs");
       petTypeList.add(petType1);
 
