@@ -9,7 +9,7 @@ const AdoptMeForm = (props) => {
     email: "",
     homeStatus: "",
     applicationStatus: "Pending",
-    id: `${props.id}`,
+    petId: `${props.id}`,
   }
 
   const [newApplication, setNewApplication] = useState(defaultFormValue)
@@ -39,19 +39,25 @@ const AdoptMeForm = (props) => {
     return _.isEmpty(submitErrors)
   }
 
-  const onSubmitHandler = (event) => {
-    event.preventDefault()
-    if (validForSubmission()) {
-      submitForm(newApplication)
-    }
-  }
+  let pet = props.pet
 
   const submitForm = (event) => {
     event.preventDefault()
+
+    let formPayLoad = {
+      name: newApplication.name,
+      phoneNumber: newApplication.phoneNumber,
+      email: newApplication.email,
+      homeStatus: newApplication.homeStatus,
+      applicationStatus: "Pending",
+      pet: pet,
+    }
+    console.log(formPayLoad)
+
     if (validForSubmission()) {
       fetch("/api/v1/adoptionApplication", {
         method: "POST",
-        body: JSON.stringify(newApplication),
+        body: JSON.stringify(formPayLoad),
         headers: { "Content-Type": "application/json" },
       })
         .then((response) => {

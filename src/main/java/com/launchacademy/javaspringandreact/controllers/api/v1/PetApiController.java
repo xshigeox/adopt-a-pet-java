@@ -1,8 +1,10 @@
 package com.launchacademy.javaspringandreact.controllers.api.v1;
 
+import com.launchacademy.javaspringandreact.models.AdoptionApplication;
 import com.launchacademy.javaspringandreact.models.Pet;
 import com.launchacademy.javaspringandreact.models.PetSurrenderApplication;
 import com.launchacademy.javaspringandreact.models.PetType;
+import com.launchacademy.javaspringandreact.repositories.AdoptionApplicationRepository;
 import com.launchacademy.javaspringandreact.repositories.PetRepository;
 import com.launchacademy.javaspringandreact.repositories.PetSurrenderApplicationRepository;
 import com.launchacademy.javaspringandreact.repositories.PetTypeRepository;
@@ -38,6 +40,9 @@ public class PetApiController {
   @Autowired
   private PetSurrenderApplicationRepository petSurrenderRepo;
 
+  @Autowired
+  private AdoptionApplicationRepository adoptionApplicationRepo;
+
   @NoArgsConstructor
   private class PetTypeNotFoundException extends RuntimeException {
 
@@ -64,7 +69,22 @@ public class PetApiController {
     @ResponseBody
     @ExceptionHandler(InvalidPetSurrenderApplicationException.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    String invalidContractor(InvalidPetSurrenderApplicationException ic) {
+    String invalidPetSurrenderApplication(InvalidPetSurrenderApplicationException ic) {
+      return "";
+    }
+  }
+
+  private class InvalidAdoptionApplicationException extends RuntimeException {
+
+  }
+
+  @ControllerAdvice
+  private class InvalidAdoptionApplicationAdvice {
+
+    @ResponseBody
+    @ExceptionHandler(InvalidAdoptionApplicationException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    String invalidAdoptionApplication(InvalidAdoptionApplicationException ic) {
       return "";
     }
   }
@@ -76,7 +96,7 @@ public class PetApiController {
 
   @GetMapping("/pets/{id}")
   public PetType getOne(@PathVariable Integer id) {
-    return petTypeRepo.findById(id).orElseThrow(() -> new PetTypeNotFoundException());
+    return petTypeRepo.findById(id).orElseThrow(PetTypeNotFoundException::new);
   }
 
   @GetMapping("/{petType}")
@@ -107,6 +127,17 @@ public class PetApiController {
       throw new InvalidPetSurrenderApplicationException();
     } else {
       return petSurrenderRepo.save(petSurrenderApplication);
+    }
+  }
+
+  @PostMapping("/adoptionApplication")
+  public AdoptionApplication create(@RequestBody @Valid AdoptionApplication adoptionApplication,
+      BindingResult bindingResult) {
+
+    if (bindingResult.hasErrors()) {
+      throw new InvalidAdoptionApplicationException();
+    } else {
+      return adoptionApplicationRepo.save(adoptionApplication);
     }
   }
 }
