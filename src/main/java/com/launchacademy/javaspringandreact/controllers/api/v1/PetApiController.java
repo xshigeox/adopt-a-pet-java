@@ -1,9 +1,11 @@
 package com.launchacademy.javaspringandreact.controllers.api.v1;
 
+import com.launchacademy.javaspringandreact.models.Admin;
 import com.launchacademy.javaspringandreact.models.AdoptionApplication;
 import com.launchacademy.javaspringandreact.models.Pet;
 import com.launchacademy.javaspringandreact.models.PetSurrenderApplication;
 import com.launchacademy.javaspringandreact.models.PetType;
+import com.launchacademy.javaspringandreact.repositories.AdminRepository;
 import com.launchacademy.javaspringandreact.repositories.AdoptionApplicationRepository;
 import com.launchacademy.javaspringandreact.repositories.PetRepository;
 import com.launchacademy.javaspringandreact.repositories.PetSurrenderApplicationRepository;
@@ -41,6 +43,9 @@ public class PetApiController {
 
   @Autowired
   private AdoptionApplicationRepository adoptionApplicationRepo;
+
+  @Autowired
+  private AdminRepository adminRepo;
 
   @NoArgsConstructor
   private class PetTypeNotFoundException extends RuntimeException {
@@ -147,5 +152,10 @@ public class PetApiController {
     } else {
       return adoptionApplicationRepo.save(adoptionApplication);
     }
+  }
+
+  @GetMapping("/login")
+  public Iterable<Admin> login() {
+    return adminRepo.findAll();
   }
 }

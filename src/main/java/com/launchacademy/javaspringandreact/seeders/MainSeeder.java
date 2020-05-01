@@ -13,9 +13,13 @@ public class MainSeeder implements CommandLineRunner {
   @Autowired
   PetTypeSeeder petTypeSeeder;
 
+  @Autowired
+  AdminSeeder adminSeeder;
+
   @Override
   public void run(String... args) throws Exception {
     petTypeSeeder.seed();
     petSeeder.seed();
+    adminSeeder.seed();
   }
 }
