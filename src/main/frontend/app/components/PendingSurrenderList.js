@@ -139,9 +139,8 @@ const PendingSurrenderList = (props) => {
                 Edit Application
               </button>
             </Link>
-            <i class="fas fa-arrows-alt-h"></i>
             <button
-              className="button primary small"
+              className="button secondary small"
               value="Delete"
               id={id}
               onClick={deleteApplication}
