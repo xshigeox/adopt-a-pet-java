@@ -20,11 +20,7 @@ const LoginPage = (props) => {
     }
 
     if (isValidForSubmission()) {
-      fetch("/api/v1/login", {
-        method: "POST",
-        body: JSON.stringify(loginInfo),
-        headers: { "Content-Type": "application/json" },
-      })
+      fetch("/api/v1/login")
         .then((response) => {
           if (response.ok) {
             return response.json()
@@ -36,7 +32,14 @@ const LoginPage = (props) => {
         })
         .then((data) => {
           let submitErrors
-          if (data.rows.length !== 0) {
+          let userNames = data.map((user) => {
+            return user.userName
+          })
+          let passwords = data.map((user) => {
+            return user.password
+          })
+
+          if (userNames.includes(userName) && passwords.includes(password)) {
             setDisplay("bg-hide")
           } else {
             submitErrors = {
@@ -86,14 +89,14 @@ const LoginPage = (props) => {
       <div>
         <div>
           <h6 className="header-title">Pending Adoption Applications</h6>
-          {/* <PendingAppContainer /> */}
+          <PendingAppContainer />
         </div>
 
         <div>
           <h6 className="header-title">
             Pending Animal Surrender Applications
           </h6>
-          {/* <PendingSurrenderContainer /> */}
+          <PendingSurrenderContainer />
         </div>
       </div>
     )

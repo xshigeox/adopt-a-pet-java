@@ -4,6 +4,7 @@ import TypeOfPetsContainer from "./components/TypeOfPetsContainer"
 import PetListContainer from "./components/PetListContainer"
 import PetShowContainer from "./components/PetShowContainer"
 import SurrenderForm from "./components/SurrenderForm"
+import LoginPage from "./components/LoginPage"
 
 const App = (props) => {
   return (
@@ -52,7 +53,7 @@ const App = (props) => {
             <PetListContainer petType={"reptile"} petTypeName={"Reptiles"} />
           </Route>
           <Route exact path="/adoptions/new" component={SurrenderForm} />
-          {/* <Route exact path="/login" component={LoginPage} /> */}
+          <Route exact path="/login" component={LoginPage} />
           <Route exact path="/pets/:petType/:id" component={PetShowContainer} />
         </Switch>
       </div>
