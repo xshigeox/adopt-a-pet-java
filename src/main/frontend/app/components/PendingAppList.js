@@ -9,7 +9,7 @@ const PendingAppList = (props) => {
     applicationStatus,
     id,
     pet,
-  } = props.data
+  } = props.data  
 
   let status
   if (pet.vaccinationStatus === true) {
