@@ -67,7 +67,18 @@ public class PetApiController {
       }
     }
     return notApproved;
+  }
 
+  @GetMapping("/api/v1/adopted")
+  public List getAdoptedPets() {
+    Iterable<Pet> pets = petRepo.findAll();
+    List<Pet> adoptedPets = new ArrayList<>();
+    for (Pet pet : pets) {
+      if (pet.getAdoptionStatus().equals("Approved")) {
+        adoptedPets.add(pet);
+      }
+    }
+    return adoptedPets;
   }
 
   @GetMapping("/api/v1/{petType}/{id}")

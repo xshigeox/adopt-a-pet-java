@@ -6,6 +6,7 @@ import PetShowContainer from "./components/PetShowContainer"
 import SurrenderForm from "./components/SurrenderForm"
 import LoginPage from "./components/LoginPage"
 import EditApplicationContainer from "./components/EditApplicationContainer"
+import AdoptedPetContainer from "./components/AdoptedPetContainer"
 
 const App = (props) => {
   return (
@@ -30,8 +31,12 @@ const App = (props) => {
                   <Link to="/pets/reptiles">Reptiles</Link>
                 </li>
                 <li>
+                  <Link to="/adopted">Adopted Pets</Link>
+                </li>
+                <li>
                   <Link to="/adoptions/new">Put up for Adoption</Link>
                 </li>
+
                 <li className="admin-button">
                   <Link to="/login">Login</Link>
                 </li>
@@ -62,6 +67,7 @@ const App = (props) => {
             path="/pending_applications"
             component={EditApplicationContainer}
           />
+          <Route exact path="/adopted" component={AdoptedPetContainer} />
         </Switch>
       </div>
     </BrowserRouter>
