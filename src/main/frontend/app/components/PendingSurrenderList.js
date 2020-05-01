@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { Link } from "react-router-dom"
 
 const PendingSurrenderList = (props) => {
   const [story, setStory] = useState({
@@ -98,36 +99,20 @@ const PendingSurrenderList = (props) => {
             <p className="author-name">Applicant: {name}</p>
             <p className="author-location">Phone Number: {phoneNumber}</p>
             <p className="author-location">Email: {email}</p>
-            <label htmlFor="adoptionStory">
-              <p className="author-location">Adoption Story:</p>
-              <input
-                type="text"
-                name="story"
-                id="story"
-                value={story.story}
-                onChange={handleInputChange}
-              />
-            </label>
           </div>
         </div>
         <div className="small-6 columns add-friend div-pending-button">
           <div className="add-friend-action">
-            <button
-              className="button primary small"
-              value="Approved"
-              id={id}
-              onClick={updateStatus}
+            <Link
+              to={{
+                pathname: "/pending_applications",
+                editProps: { applicant: props.data },
+              }}
             >
-              <i className="far fa-smile" aria-hidden="true"></i> Approve
-            </button>
-            <button
-              className="button secondary small"
-              value="Denied"
-              id={id}
-              onClick={updateStatus}
-            >
-              <i className="far fa-frown" aria-hidden="true"></i> Deny
-            </button>
+              <button className="button primary small" value="Approved" id={id}>
+                Edit Application
+              </button>
+            </Link>
           </div>
         </div>
       </div>
