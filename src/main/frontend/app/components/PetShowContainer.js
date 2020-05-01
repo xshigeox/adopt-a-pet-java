@@ -26,8 +26,6 @@ const ShowPage = (props) => {
       })
   }, {})
 
-  console.log(found)
-
   return <PetInfo key={petId} pet={pet} found={found} />
 }
 
