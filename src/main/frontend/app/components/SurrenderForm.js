@@ -100,7 +100,7 @@ const SurrenderForm = (props) => {
     }
 
     if (isValidForSubmission()) {
-      fetch("/api/v1/newPet", {
+      fetch("/api/v1/new_pet", {
         method: "POST",
         body: JSON.stringify(formPayLoad),
         headers: { "Content-Type": "application/json" },

@@ -52,10 +52,9 @@ const AdoptMeForm = (props) => {
       applicationStatus: "Pending",
       pet: pet,
     }
-    console.log(formPayLoad)
 
     if (validForSubmission()) {
-      fetch("/api/v1/adoptionApplication", {
+      fetch("/api/v1/adoption_application", {
         method: "POST",
         body: JSON.stringify(formPayLoad),
         headers: { "Content-Type": "application/json" },
