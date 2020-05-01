@@ -1,9 +1,11 @@
 import React, { useState } from "react"
-import { Link, Redirect } from "react-router-dom"
+import { Link } from "react-router-dom"
+import ErrorList from "./ErrorList"
 
 const PendingSurrenderList = (props) => {
   const [deleted, setDeleted] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [errors, setErrors] = useState({})
   const [story, setStory] = useState({
     story: "",
   })
@@ -41,6 +43,21 @@ const PendingSurrenderList = (props) => {
     })
   }
 
+  const validForSubmission = () => {
+    let submitErrors = {}
+    const requiredFields = ["story"]
+    requiredFields.forEach((field) => {
+      if (story[field].trim() === "") {
+        submitErrors = {
+          ...submitErrors,
+          [field]: "is blank",
+        }
+      }
+    })
+    setErrors(submitErrors)
+    return _.isEmpty(submitErrors)
+  }
+
   const approveApplication = (event) => {
     event.preventDefault()
     let newPet = {
@@ -52,23 +69,26 @@ const PendingSurrenderList = (props) => {
       adoptionStatus: "Pending",
       petType: petType,
     }
-    fetch(`/api/v1/approve_pet/${props.data.id}`, {
-      method: "POST",
-      body: JSON.stringify(newPet),
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((response) => {
-        if (response.ok) {
-          setSubmitted(true)
-          alert("Application Approved")
-          window.location.href = "http://localhost:8080"
-        } else {
-          let errorMessage = `${response.statues} (${response.statusText})`,
-            error = new Error(errorMessage)
-          throw error
-        }
+
+    if (validForSubmission()) {
+      fetch(`/api/v1/approve_pet/${props.data.id}`, {
+        method: "POST",
+        body: JSON.stringify(newPet),
+        headers: { "Content-Type": "application/json" },
       })
-      .catch((error) => console.error(`Error in fetch: ${error.message}`))
+        .then((response) => {
+          if (response.ok) {
+            setSubmitted(true)
+            alert("Application Approved")
+            window.location.href = "http://localhost:8080"
+          } else {
+            let errorMessage = `${response.statues} (${response.statusText})`,
+              error = new Error(errorMessage)
+            throw error
+          }
+        })
+        .catch((error) => console.error(`Error in fetch: ${error.message}`))
+    }
   }
 
   const deleteApplication = (event) => {
@@ -78,7 +98,6 @@ const PendingSurrenderList = (props) => {
     )
     if (answer.toLocaleLowerCase() === "yes") {
       let id = props.data.id
-      console.log("delete attempt")
       fetch(`/api/v1/delete/${id}`, {
         method: "DELETE",
         body: JSON.stringify(props.data),
@@ -88,6 +107,7 @@ const PendingSurrenderList = (props) => {
           if (response.ok) {
             alert("Application deleted")
             setDeleted(true)
+            window.location.href = "http://localhost:8080"
           } else {
             let errorMessage = `${response.status} (${response.statusText})`
             throw new Error(errorMessage)
@@ -126,6 +146,7 @@ const PendingSurrenderList = (props) => {
             <p className="author-location">Phone Number: {phoneNumber}</p>
             <p className="author-location">Email: {email}</p>
             <label htmlFor="adoptionStory">
+              <ErrorList errors={errors} />
               <p className="author-location">Adoption Story:</p>
               <input
                 type="text"
