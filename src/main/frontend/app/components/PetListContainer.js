@@ -5,7 +5,7 @@ const PetListContainer = (props) => {
   const [pets, setPets] = useState([])
 
   useEffect(() => {
-    fetch(`/api/v1/${props.petType}`)
+    fetch(`/api/v1/not_approved/${props.petType}`)
       .then((response) => {
         if (response.ok) {
           return response
