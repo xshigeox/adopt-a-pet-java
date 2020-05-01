@@ -1,7 +1,8 @@
 import React, { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, Redirect } from "react-router-dom"
 
 const PendingSurrenderList = (props) => {
+  const [deleted, setDeleted] = useState(false)
   const [story, setStory] = useState({
     story: "",
   })
@@ -38,7 +39,6 @@ const PendingSurrenderList = (props) => {
       [event.currentTarget.id]: event.currentTarget.value,
     })
   }
-
   const updateStatus = (event) => {
     event.preventDefault()
     const approvalStatus = {
@@ -69,6 +69,32 @@ const PendingSurrenderList = (props) => {
       .catch((error) => console.error(`Error in fetch: ${error.message}`))
     alert("Form " + event.currentTarget.value)
     window.location.href = "http://localhost:8080"
+  }
+
+  const deleteApplication = (event) => {
+    event.preventDefault()
+    let answer = prompt(
+      "Are you sure you want to delete application?\nEnter 'Yes' to delete or 'No' to cancel."
+    )
+    if (answer.toLocaleLowerCase() === "yes") {
+      let id = props.data.id
+      console.log("delete attempt")
+      fetch(`/api/v1/delete/${id}`, {
+        method: "DELETE",
+        body: JSON.stringify(props.data),
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((response) => {
+          if (response.ok) {
+            alert("Application deleted")
+            setDeleted(true)
+          } else {
+            let errorMessage = `${response.status} (${response.statusText})`
+            throw new Error(errorMessage)
+          }
+        })
+        .catch((error) => console.error(`Error in fetch: ${error.message}`))
+    }
   }
 
   return (
@@ -113,6 +139,15 @@ const PendingSurrenderList = (props) => {
                 Edit Application
               </button>
             </Link>
+            <i class="fas fa-arrows-alt-h"></i>
+            <button
+              className="button primary small"
+              value="Delete"
+              id={id}
+              onClick={deleteApplication}
+            >
+              Delete Application
+            </button>
           </div>
         </div>
       </div>
