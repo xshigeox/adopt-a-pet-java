@@ -1,10 +1,8 @@
 import React from "react"
+import { Link } from "react-router-dom"
 
 const PendingAppList = (props) => {
   const {
-    imgUrl,
-    vaccinationStatus,
-    adoptionStory,
     name,
     phoneNumber,
     email,
@@ -15,7 +13,7 @@ const PendingAppList = (props) => {
   } = props.data
 
   let status
-  if (vaccinationStatus === true) {
+  if (pet.vaccinationStatus === true) {
     status = "Up to Date"
   } else {
     status = "Not Up to Date"
@@ -23,31 +21,29 @@ const PendingAppList = (props) => {
 
   const updateStatus = (event) => {
     event.preventDefault()
-    const approvalStatus = {
-      status: event.currentTarget.value,
-      id: event.currentTarget.id,
-    }
+    // const approvalStatus = {
+    //   status: event.currentTarget.value,
+    //   id: event.currentTarget.id,
+    // }
 
-    fetch("/api/v1/approval_status", {
-      method: "POST",
-      body: JSON.stringify(approvalStatus),
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response
-        } else {
-          let errorMessage = `${response.statues} (${response.statusText})`,
-            error = new Error(errorMessage)
-          throw error
-        }
-      })
-      .catch((error) => console.error(`Error in fetch: ${error.message}`))
-    alert("Form " + event.currentTarget.value)
-    window.location.href = "http://localhost:8080"
+    // fetch("/api/v1/approval_status", {
+    //   method: "POST",
+    //   body: JSON.stringify(approvalStatus),
+    //   headers: { "Content-Type": "application/json" },
+    // })
+    //   .then((response) => {
+    //     if (response.ok) {
+    //       return response
+    //     } else {
+    //       let errorMessage = `${response.statues} (${response.statusText})`,
+    //         error = new Error(errorMessage)
+    //       throw error
+    //     }
+    //   })
+    //   .catch((error) => console.error(`Error in fetch: ${error.message}`))
+    // alert("Form " + event.currentTarget.value)
+    // window.location.href = "http://localhost:8080/pets/reptiles"
   }
-
-  console.log(pet)
 
   return (
     <div className="add-pets-section">
@@ -62,9 +58,8 @@ const PendingAppList = (props) => {
 
         <div className="small-6 columns about-pets div-pending-pet-applicant">
           <div className="about-pets-author">
-            <p className="author-name">{pet.name}</p>
+            <p className="author-name">Pet: {pet.name}</p>
             <p className="author-location">Vaccination Status: {status}</p>
-            <p className="author-location">Adoption Story: {adoptionStory}</p>
             <p className="author-location">
               Adoption Status: {applicationStatus}
             </p>
@@ -83,24 +78,7 @@ const PendingAppList = (props) => {
           </div>
         </div>
         <div className="small-6 columns add-friend div-pending-button">
-          <div className="add-friend-action">
-            <button
-              className="button primary small"
-              value="Approved"
-              id={id}
-              onClick={updateStatus}
-            >
-              <i className="far fa-smile" aria-hidden="true"></i> Approve
-            </button>
-            <button
-              className="button secondary small"
-              value="Denied"
-              id={id}
-              onClick={updateStatus}
-            >
-              <i className="far fa-frown" aria-hidden="true"></i> Deny
-            </button>
-          </div>
+          <div className="add-friend-action"></div>
         </div>
       </div>
     </div>

@@ -1,10 +1,11 @@
 import React from "react"
-import { BrowserRouter, Switch, Link, Route } from "react-router-dom"
+import { BrowserRouter, Switch, Link, Route, Redirect } from "react-router-dom"
 import TypeOfPetsContainer from "./components/TypeOfPetsContainer"
 import PetListContainer from "./components/PetListContainer"
 import PetShowContainer from "./components/PetShowContainer"
 import SurrenderForm from "./components/SurrenderForm"
 import LoginPage from "./components/LoginPage"
+import EditApplicationContainer from "./components/EditApplicationContainer"
 
 const App = (props) => {
   return (
@@ -42,7 +43,8 @@ const App = (props) => {
 
       <div className="bottom">
         <Switch>
-          <Route exact path="/" component={TypeOfPetsContainer} />
+          <Redirect exact path="/" to="/pets" />
+          <Route exact path="/pets" component={TypeOfPetsContainer} />
           <Route exact path="/pets/guineapigs" key={"gp"}>
             <PetListContainer
               petType={"guineapig"}
@@ -55,6 +57,11 @@ const App = (props) => {
           <Route exact path="/adoptions/new" component={SurrenderForm} />
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/pets/:petType/:id" component={PetShowContainer} />
+          <Route
+            exact
+            path="/pending_applications"
+            component={EditApplicationContainer}
+          />
         </Switch>
       </div>
     </BrowserRouter>
