@@ -75,7 +75,7 @@ const SurrenderForm = (props) => {
   }
 
   let typeId
-  if (newSurrender.petTypeId === "1") {
+  if (newSurrender.petType === "1") {
     typeId = 1
   } else {
     typeId = 2

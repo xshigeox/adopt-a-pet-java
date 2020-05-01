@@ -2,21 +2,20 @@ import React from "react"
 
 const PendingAppList = (props) => {
   const {
-    pet_name,
-    img_url,
-    vaccination_status,
-    adoption_story,
-    adoption_status,
-    person_name,
-    phone_number,
+    imgUrl,
+    vaccinationStatus,
+    adoptionStory,
+    name,
+    phoneNumber,
     email,
-    home_status,
-    application_status,
+    homeStatus,
+    applicationStatus,
     id,
+    pet,
   } = props.data
 
   let status
-  if (vaccination_status === true) {
+  if (vaccinationStatus === true) {
     status = "Up to Date"
   } else {
     status = "Not Up to Date"
@@ -29,7 +28,7 @@ const PendingAppList = (props) => {
       id: event.currentTarget.id,
     }
 
-    fetch("/api/v1/approvalStatus", {
+    fetch("/api/v1/approval_status", {
       method: "POST",
       body: JSON.stringify(approvalStatus),
       headers: { "Content-Type": "application/json" },
@@ -45,8 +44,10 @@ const PendingAppList = (props) => {
       })
       .catch((error) => console.error(`Error in fetch: ${error.message}`))
     alert("Form " + event.currentTarget.value)
-    window.location.href = "http://localhost:3000/pets"
+    window.location.href = "http://localhost:8080"
   }
+
+  console.log(pet)
 
   return (
     <div className="add-pets-section">
@@ -54,30 +55,30 @@ const PendingAppList = (props) => {
         <div className="small-6 columns about-pets-avatar">
           <img
             className="avatar-image pending-form-img"
-            src={img_url}
-            alt={pet_name}
+            src={pet.imgUrl}
+            alt={pet.name}
           />
         </div>
 
         <div className="small-6 columns about-pets div-pending-pet-applicant">
           <div className="about-pets-author">
-            <p className="author-name">{pet_name}</p>
+            <p className="author-name">{pet.name}</p>
             <p className="author-location">Vaccination Status: {status}</p>
-            <p className="author-location">Adoption Story: {adoption_story}</p>
+            <p className="author-location">Adoption Story: {adoptionStory}</p>
             <p className="author-location">
-              Adoption Status: {adoption_status}
+              Adoption Status: {applicationStatus}
             </p>
           </div>
         </div>
 
         <div className="small-6 columns about-pets div-pending-pet-applicant">
           <div className="about-pets-author">
-            <p className="author-name">Applicant: {person_name}</p>
-            <p className="author-location">Phone Number: {phone_number}</p>
+            <p className="author-name">Applicant: {name}</p>
+            <p className="author-location">Phone Number: {phoneNumber}</p>
             <p className="author-location">Email: {email}</p>
-            <p className="author-location">Home Status: {home_status}</p>
+            <p className="author-location">Home Status: {homeStatus}</p>
             <p className="author-location">
-              Application Status: {application_status}
+              Application Status: {applicationStatus}
             </p>
           </div>
         </div>

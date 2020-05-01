@@ -7,28 +7,28 @@ const PendingSurrenderList = (props) => {
   const {
     id,
     name,
-    phone_number,
+    phoneNumber,
     email,
-    pet_name,
-    pet_age,
-    pet_type_id,
-    pet_img_url,
-    vaccination_status,
-    application_status,
+    petName,
+    petAge,
+    petType,
+    petImgUrl,
+    vaccinationStatus,
+    applicationStatus,
   } = props.data
 
   let status
-  if (vaccination_status === true) {
+  if (vaccinationStatus === true) {
     status = "Up to Date"
   } else {
     status = "Not Up to Date"
   }
 
   let animalType
-  if (pet_type_id === 1) {
-    animalType = "Guinea Pig"
-  } else if (pet_type_id === 2) {
+  if (petType.type === "reptile") {
     animalType = "Reptile"
+  } else if (petType.type === "guineapig") {
+    animalType = "Guinea Pig"
   }
 
   const handleInputChange = (event) => {
@@ -41,17 +41,17 @@ const PendingSurrenderList = (props) => {
   const updateStatus = (event) => {
     event.preventDefault()
     const approvalStatus = {
-      name: pet_name,
-      img_url: pet_img_url,
-      age: pet_age,
-      vaccination_status: vaccination_status,
-      adoption_story: story.story,
-      adoption_status: "Pending",
-      pet_type_id: pet_type_id,
-      application_status: "Approved",
+      name: petName,
+      img_url: petImgUrl,
+      age: petAge,
+      vaccinationStatus: vaccinationStatus,
+      adoptionStory: story.story,
+      adoptionStatus: "Pending",
+      petType: petType,
+      applicationStatus: "Approved",
     }
 
-    fetch("/api/v1/surrenderStatus", {
+    fetch("/api/v1/surrender_status", {
       method: "POST",
       body: JSON.stringify(approvalStatus),
       headers: { "Content-Type": "application/json" },
@@ -67,7 +67,7 @@ const PendingSurrenderList = (props) => {
       })
       .catch((error) => console.error(`Error in fetch: ${error.message}`))
     alert("Form " + event.currentTarget.value)
-    window.location.href = "http://localhost:3000/pets"
+    window.location.href = "http://localhost:8080"
   }
 
   return (
@@ -76,19 +76,19 @@ const PendingSurrenderList = (props) => {
         <div className="small-6 columns about-pets-avatar">
           <img
             className="avatar-image pending-form-img"
-            src={pet_img_url}
-            alt={pet_name}
+            src={petImgUrl}
+            alt={petName}
           />
         </div>
 
         <div className="small-6 columns about-pets div-pending-pet-applicant">
           <div className="about-pets-author">
-            <p className="author-name">{pet_name}</p>
+            <p className="author-name">{petName}</p>
             <p className="author-location">Type of Animal: {animalType}</p>
             <p className="author-location">Vaccination Status: {status}</p>
-            <p className="author-location">Pet Age: {pet_age}</p>
+            <p className="author-location">Pet Age: {petAge}</p>
             <p className="author-location">
-              Application Status: {application_status}
+              Application Status: {applicationStatus}
             </p>
           </div>
         </div>
@@ -96,7 +96,7 @@ const PendingSurrenderList = (props) => {
         <div className="small-6 columns about-pets div-pending-pet-applicant">
           <div className="about-pets-author">
             <p className="author-name">Applicant: {name}</p>
-            <p className="author-location">Phone Number: {phone_number}</p>
+            <p className="author-location">Phone Number: {phoneNumber}</p>
             <p className="author-location">Email: {email}</p>
             <label htmlFor="adoptionStory">
               <p className="author-location">Adoption Story:</p>
