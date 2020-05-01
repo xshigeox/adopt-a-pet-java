@@ -21,28 +21,34 @@ const PendingAppList = (props) => {
 
   const updateStatus = (event) => {
     event.preventDefault()
-    // const approvalStatus = {
-    //   status: event.currentTarget.value,
-    //   id: event.currentTarget.id,
-    // }
+    const formPayLoad = {
+      name: name,
+      phoneNumber: phoneNumber,
+      email: email,
+      homeStatus: homeStatus,
+      applicationStatus: event.currentTarget.value,
+      pet: pet,
+      id: event.currentTarget.id,
+    }
 
-    // fetch("/api/v1/approval_status", {
-    //   method: "POST",
-    //   body: JSON.stringify(approvalStatus),
-    //   headers: { "Content-Type": "application/json" },
-    // })
-    //   .then((response) => {
-    //     if (response.ok) {
-    //       return response
-    //     } else {
-    //       let errorMessage = `${response.statues} (${response.statusText})`,
-    //         error = new Error(errorMessage)
-    //       throw error
-    //     }
-    //   })
-    //   .catch((error) => console.error(`Error in fetch: ${error.message}`))
-    // alert("Form " + event.currentTarget.value)
-    // window.location.href = "http://localhost:8080/pets/reptiles"
+    let status = event.currentTarget.value
+    fetch(`/api/v1/approval_status/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(formPayLoad),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => {
+        if (response.ok) {
+          alert("Application " + status)
+          window.location.href = "http://localhost:8080/"
+          return response
+        } else {
+          let errorMessage = `${response.statues} (${response.statusText})`,
+            error = new Error(errorMessage)
+          throw error
+        }
+      })
+      .catch((error) => console.error(`Error in fetch: ${error.message}`))
   }
 
   return (
@@ -78,7 +84,24 @@ const PendingAppList = (props) => {
           </div>
         </div>
         <div className="small-6 columns add-friend div-pending-button">
-          <div className="add-friend-action"></div>
+          <div className="add-friend-action">
+            <button
+              className="button primary small"
+              value="Approved"
+              id={id}
+              onClick={updateStatus}
+            >
+              <i className="far fa-smile" aria-hidden="true"></i> Approve
+            </button>
+            <button
+              className="button secondary small"
+              value="Denied"
+              id={id}
+              onClick={updateStatus}
+            >
+              <i className="far fa-frown" aria-hidden="true"></i> Deny
+            </button>
+          </div>
         </div>
       </div>
     </div>

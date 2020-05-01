@@ -80,7 +80,7 @@ public class PetSurrenderApiController {
     return petSurrenderRepo.findById(id).map(
         petSurrenderApplication -> {
           petSurrenderApplication.setId(id);
-          petSurrenderApplication.setName((newPetSurrenderApplication.getName()));
+          petSurrenderApplication.setName(newPetSurrenderApplication.getName());
           petSurrenderApplication.setPhoneNumber(newPetSurrenderApplication.getPhoneNumber());
           petSurrenderApplication.setEmail(newPetSurrenderApplication.getEmail());
           petSurrenderApplication.setPetName(newPetSurrenderApplication.getPetName());
