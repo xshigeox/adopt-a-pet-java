@@ -4,6 +4,7 @@ import com.launchacademy.javaspringandreact.models.AdoptionApplication;
 import com.launchacademy.javaspringandreact.models.Pet;
 import com.launchacademy.javaspringandreact.repositories.AdoptionApplicationRepository;
 import com.launchacademy.javaspringandreact.repositories.PetRepository;
+import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.NoArgsConstructor;
@@ -62,7 +63,16 @@ public class AdoptionApplicationApiController {
 
   @GetMapping("/api/v1/adoption_applications")
   public List getAdoptionApplications() {
-    return adoptionApplicationRepo.findAll();
+    List<AdoptionApplication> applications = adoptionApplicationRepo.findAll();
+    List<AdoptionApplication> pendingApplications = new ArrayList<>();
+
+    for (AdoptionApplication adoptionApplication : applications) {
+      if (!adoptionApplication.getApplicationStatus().equals("Approved")) {
+        pendingApplications.add(adoptionApplication);
+      }
+    }
+
+    return pendingApplications;
   }
 
   @PostMapping("/api/v1/adoption_application")

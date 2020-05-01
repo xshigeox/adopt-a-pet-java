@@ -6,6 +6,7 @@ import com.launchacademy.javaspringandreact.models.PetType;
 import com.launchacademy.javaspringandreact.repositories.AdminRepository;
 import com.launchacademy.javaspringandreact.repositories.PetRepository;
 import com.launchacademy.javaspringandreact.repositories.PetTypeRepository;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,21 @@ public class PetApiController {
     PetType type = petTypeRepo.findByType(petType);
 
     return petRepo.findAllByPetType(type);
+  }
+
+  @GetMapping("/api/v1/not_approved/{petType}")
+  public List getNotApprovedPetsByType(@PathVariable String petType) {
+    PetType type = petTypeRepo.findByType(petType);
+    List<Pet> pets = petRepo.findAllByPetType(type);
+    List<Pet> notApproved = new ArrayList<>();
+
+    for (Pet pet : pets) {
+      if (!pet.getAdoptionStatus().equals("Approved")) {
+        notApproved.add(pet);
+      }
+    }
+    return notApproved;
+
   }
 
   @GetMapping("/api/v1/{petType}/{id}")
