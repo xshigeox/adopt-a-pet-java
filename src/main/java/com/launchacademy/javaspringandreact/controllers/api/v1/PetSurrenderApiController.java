@@ -2,6 +2,7 @@ package com.launchacademy.javaspringandreact.controllers.api.v1;
 
 import com.launchacademy.javaspringandreact.models.PetSurrenderApplication;
 import com.launchacademy.javaspringandreact.repositories.PetSurrenderApplicationRepository;
+import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.NoArgsConstructor;
@@ -59,7 +60,14 @@ public class PetSurrenderApiController {
 
   @GetMapping("/api/v1/pet_surrender_applications")
   public List getPetSurrenderApplications() {
-    return petSurrenderRepo.findAll();
+    List<PetSurrenderApplication> applications = petSurrenderRepo.findAll();
+    List<PetSurrenderApplication> pendingApplications = new ArrayList<>();
+    for (PetSurrenderApplication application : applications) {
+      if (!application.getApplicationStatus().equals("Approved")) {
+        pendingApplications.add(application);
+      }
+    }
+    return pendingApplications;
   }
 
   @PostMapping("/api/v1/new_pet")

@@ -3,6 +3,7 @@ import { Link, Redirect } from "react-router-dom"
 
 const PendingSurrenderList = (props) => {
   const [deleted, setDeleted] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
   const [story, setStory] = useState({
     story: "",
   })
@@ -39,27 +40,28 @@ const PendingSurrenderList = (props) => {
       [event.currentTarget.id]: event.currentTarget.value,
     })
   }
-  const updateStatus = (event) => {
+
+  const approveApplication = (event) => {
     event.preventDefault()
-    const approvalStatus = {
+    let newPet = {
       name: petName,
-      img_url: petImgUrl,
+      imgUrl: petImgUrl,
       age: petAge,
       vaccinationStatus: vaccinationStatus,
       adoptionStory: story.story,
       adoptionStatus: "Pending",
       petType: petType,
-      applicationStatus: "Approved",
     }
-
-    fetch("/api/v1/surrender_status", {
+    fetch(`/api/v1/approve_pet/${props.data.id}`, {
       method: "POST",
-      body: JSON.stringify(approvalStatus),
+      body: JSON.stringify(newPet),
       headers: { "Content-Type": "application/json" },
     })
       .then((response) => {
         if (response.ok) {
-          return response
+          setSubmitted(true)
+          alert("Application Approved")
+          window.location.href = "http://localhost:8080"
         } else {
           let errorMessage = `${response.statues} (${response.statusText})`,
             error = new Error(errorMessage)
@@ -67,8 +69,6 @@ const PendingSurrenderList = (props) => {
         }
       })
       .catch((error) => console.error(`Error in fetch: ${error.message}`))
-    alert("Form " + event.currentTarget.value)
-    window.location.href = "http://localhost:8080"
   }
 
   const deleteApplication = (event) => {
@@ -125,6 +125,16 @@ const PendingSurrenderList = (props) => {
             <p className="author-name">Applicant: {name}</p>
             <p className="author-location">Phone Number: {phoneNumber}</p>
             <p className="author-location">Email: {email}</p>
+            <label htmlFor="adoptionStory">
+              <p className="author-location">Adoption Story:</p>
+              <input
+                type="text"
+                name="story"
+                id="story"
+                value={story.story}
+                onChange={handleInputChange}
+              />
+            </label>
           </div>
         </div>
         <div className="small-6 columns add-friend div-pending-button">
@@ -146,6 +156,15 @@ const PendingSurrenderList = (props) => {
               onClick={deleteApplication}
             >
               Delete Application
+            </button>
+            <button
+              className="button primary small"
+              value="Approved"
+              id={id}
+              onClick={approveApplication}
+            >
+              <i className="far fa-smile" aria-hidden="true"></i> Approve
+              Application
             </button>
           </div>
         </div>
