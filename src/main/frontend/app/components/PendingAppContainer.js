@@ -5,7 +5,7 @@ const PendingAppContainer = () => {
   const [list, setList] = useState([])
 
   useEffect(() => {
-    fetch("/api/v1/adoptionApplications")
+    fetch("/api/v1/adoption_applications")
       .then((response) => {
         if (response.ok) {
           return response
@@ -28,7 +28,7 @@ const PendingAppContainer = () => {
 
   if (list[0] !== undefined) {
     const adoptionApplicants = list.map((element) => {
-      return <PendingAppList key={element.email} data={element} />
+      return <PendingAppList key={element.petName} data={element} />
     })
 
     return (

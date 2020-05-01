@@ -5,7 +5,7 @@ const PendingSurrenderContainer = (props) => {
   const [list, setList] = useState([])
 
   useEffect(() => {
-    fetch("/api/v1/surrenderApplications")
+    fetch("/api/v1/pet_surrender_applications")
       .then((response) => {
         if (response.ok) {
           return response
