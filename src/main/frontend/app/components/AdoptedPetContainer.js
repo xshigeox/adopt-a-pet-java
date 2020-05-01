@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import PetListPage from "./PetListPage"
+import AdoptedPetListPage from "./AdoptedPetListPage"
 
 const AdoptedPetContainer = (props) => {
   const [pets, setPets] = useState([])
@@ -26,7 +26,7 @@ const AdoptedPetContainer = (props) => {
   }, [])
 
   const listOfPets = pets.map((pet) => {
-    return <PetListPage key={pet.id} pet={pet} petType={props.petType} />
+    return <AdoptedPetListPage key={pet.id} pet={pet} petType={props.petType} />
   })
 
   return (
